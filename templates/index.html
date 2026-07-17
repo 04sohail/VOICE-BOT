@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Voice Agent</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="background-effects">
+        <div class="blur-blob blob-1"></div>
+        <div class="blur-blob blob-2"></div>
+    </div>
+
+    <div class="app-container">
+        <header class="glass-panel">
+            <div class="logo">
+                <div class="logo-mark"></div>
+                <h1>Astra Voice</h1>
+            </div>
+            <div class="status-indicator">
+                <div id="connection-dot" class="dot disconnected"></div>
+                <span id="connection-status">Disconnected</span>
+            </div>
+        </header>
+        
+        <main class="chat-wrapper glass-panel">
+            <div class="chat-container" id="chat-container">
+                <div class="welcome-message">
+                    <h2>Ready when you are.</h2>
+                    <p>Click "Start Listening" and talk naturally. You can interrupt me at any time!</p>
+                </div>
+            </div>
+        </main>
+        
+        <div class="controls-container">
+            <div class="orb-container" id="orb-container">
+                <div class="orb" id="orb"></div>
+                <div class="orb-glow" id="orb-glow"></div>
+                <div class="status-text" id="ai-status">Idle</div>
+            </div>
+            
+            <div class="action-buttons">
+                <button id="mic-btn" class="mic-btn glass-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path>
+                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                        <line x1="12" y1="19" x2="12" y2="22"></line>
+                    </svg>
+                    <span id="mic-text">Start Listening</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

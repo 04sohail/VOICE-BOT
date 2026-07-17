@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+jinja2
+websockets
+openai
+python-dotenv
+python-multipart
+httpx
+edge-tts
+openai-whisper
+torch
+torchaudio
