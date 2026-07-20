@@ -1,11 +1,5 @@
 FROM python:3.10-slim
 
-# Install system dependencies (ffmpeg is required for Whisper/Audio processing)
-RUN apt-get update && apt-get install -y \
-    ffmpeg \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
-
 WORKDIR /app
 
 # Copy requirements and install

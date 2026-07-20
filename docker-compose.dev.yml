@@ -9,18 +9,6 @@ services:
     ports:
       - "8081:8000"
     volumes:
-      # Mount the current directory into the container for live code reloading
       - .:/app
-      # Mount a cache directory so Whisper doesn't re-download 461MB on every restart!
-      - ./whisper_cache:/root/.cache/whisper
     env_file:
       - .env
-    
-  livekit-server:
-    image: livekit/livekit-server:latest
-    container_name: livekit-dev
-    command: --dev --bind 0.0.0.0
-    ports:
-      - "7880:7880"
-      - "7881:7881"
-      - "7882:7882/udp"

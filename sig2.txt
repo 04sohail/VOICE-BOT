@@ -1,0 +1,1 @@
+(self, *, function_responses: Union[google.genai.types.FunctionResponse, google.genai.types.FunctionResponseDict, Sequence[Union[google.genai.types.FunctionResponse, google.genai.types.FunctionResponseDict]]]) -> None

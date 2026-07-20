@@ -2,21 +2,14 @@ services:
   voice-bot:
     build:
       context: .
-      # In production, use the standard Dockerfile (without live reload dependencies)
       dockerfile: Dockerfile
     container_name: voice-bot-prod
     restart: always
     ports:
       - "80:8000"
-    volumes:
-      # We only mount the Whisper cache in prod, NOT the source code!
-      - whisper_model_cache:/root/.cache/whisper
     env_file:
       - .env
     environment:
-      # Enable local GPU TTS for ultra-low latency
-      - USE_VOXTREAM=True
-      # Production optimizations
       - PYTHONUNBUFFERED=1
       - PYTHONDONTWRITEBYTECODE=1
     deploy:
@@ -26,23 +19,3 @@ services:
             - driver: nvidia
               count: all
               capabilities: [gpu]
-    depends_on:
-      - livekit-server
-
-  livekit-server:
-    image: livekit/livekit-server:latest
-    container_name: livekit-prod
-    restart: always
-    # You MUST remove --dev in production and mount a valid config.yaml
-    # See LiveKit docs: https://docs.livekit.io/realtime/self-hosting/local/
-    command: --config /etc/livekit.yaml
-    ports:
-      - "7880:7880"
-      - "7881:7881"
-      - "7882:7882/udp"
-    volumes:
-      # In production, provide a real livekit.yaml configuration
-      - ./livekit.prod.yaml:/etc/livekit.yaml
-
-volumes:
-  whisper_model_cache:
