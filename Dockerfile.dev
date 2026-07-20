@@ -1,0 +1,24 @@
+FROM python:3.10-slim
+
+# Install system dependencies (ffmpeg is required for Whisper/Audio processing)
+RUN apt-get update && apt-get install -y \
+    ffmpeg \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+# Copy requirements and install
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir uvicorn
+
+# In development, code will be mounted via volumes. 
+# We copy it here just as a fallback.
+COPY . .
+
+# Expose port
+EXPOSE 8000
+
+# Command to run Uvicorn with auto-reload enabled
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]

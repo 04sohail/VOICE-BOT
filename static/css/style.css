@@ -345,3 +345,13 @@ h1 {
 .glass-btn.active svg {
     color: #ec4899;
 }
+
+.glass-btn.in-call {
+    background: rgba(239, 68, 68, 0.2);
+    border-color: rgba(239, 68, 68, 0.5);
+    color: #ef4444;
+}
+
+.glass-btn.in-call svg {
+    color: #ef4444;
+}

@@ -22,15 +22,12 @@ async def transcribe_audio(audio_bytes: bytes) -> str:
         return "Whisper model not initialized."
 
     try:
-        # Tiny blobs (under 5KB) usually only contain WebM headers or fractions of a second of noise.
-        # Passing them to Whisper causes tensor reshape errors.
-        if len(audio_bytes) < 5120:
-            return ""
 
-        # Save to temp file since local whisper needs a file path or numpy array
-        with tempfile.NamedTemporaryFile(suffix=".webm", delete=False) as temp_audio:
+
+        with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as temp_audio:
             temp_audio.write(audio_bytes)
             temp_filename = temp_audio.name
+            print(f"[STT] Saved {len(audio_bytes)} bytes to {temp_filename}", flush=True)
 
         # Run transcription in a separate thread so it doesn't block the async loop
         loop = asyncio.get_event_loop()
@@ -45,7 +42,9 @@ async def transcribe_audio(audio_bytes: bytes) -> str:
                 condition_on_previous_text=False,
             )
 
+        print(f"[STT] Running transcription...", flush=True)
         result = await loop.run_in_executor(None, do_transcribe)
+        print(f"[STT] Raw result: {result}", flush=True)
 
         os.remove(temp_filename)
         text = result.get("text", "").strip()
@@ -55,5 +54,5 @@ async def transcribe_audio(audio_bytes: bytes) -> str:
 
         return text
     except Exception as e:
-        print(f"STT (Local Whisper) Error: {e}")
+        print(f"STT (Local Whisper) Error: {e}", flush=True)
         return ""

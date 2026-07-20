@@ -8,7 +8,7 @@ import soundfile as sf
 
 # Load VoXtream natively if explicitly enabled by the user
 generator = None
-USE_VOXTREAM = True
+USE_VOXTREAM = os.getenv("USE_VOXTREAM", "False").lower() in ("true", "1", "yes")
 
 if USE_VOXTREAM:
     try:

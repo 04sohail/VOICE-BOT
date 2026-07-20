@@ -10,3 +10,9 @@ edge-tts
 openai-whisper
 torch
 torchaudio
+langgraph
+langchain-openai
+langchain-core
+soundfile
+livekit
+livekit-api
