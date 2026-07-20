@@ -52,7 +52,8 @@ async def get_token():
     api_secret = os.getenv("LIVEKIT_API_SECRET", "secret")
     grant = api.VideoGrants(room_join=True, room="voice_room")
     token = api.AccessToken(api_key, api_secret).with_grants(grant).with_identity("user").with_name("User").to_jwt()
-    return {"token": token}
+    public_url = os.getenv("LIVEKIT_PUBLIC_URL", "ws://localhost:7880")
+    return {"token": token, "url": public_url}
 
 
 # --- LIVEKIT AGENT LOGIC ---
@@ -242,7 +243,7 @@ async def livekit_agent_worker():
     api_secret = os.getenv("LIVEKIT_API_SECRET", "secret")
     
     # Connect to the docker service name if in docker, otherwise fallback to env
-    livekit_url = "ws://livekit-server:7880"
+    livekit_url = os.getenv("LIVEKIT_URL", "ws://livekit-server:7880")
     
     # Wait for LiveKit server to start up
     await asyncio.sleep(5)
@@ -266,7 +267,6 @@ async def livekit_agent_worker():
         room="voice_room",
     )
     token = api.AccessToken(api_key, api_secret).with_grants(grant).with_identity("agent").with_name("Agent").to_jwt()
-    
     try:
         await room.connect(livekit_url, token)
         print("🤖 LiveKit Agent Connected to Room!", flush=True)

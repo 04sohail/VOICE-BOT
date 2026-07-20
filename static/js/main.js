@@ -52,6 +52,7 @@ async function connectToLiveKit() {
         const response = await fetch('/api/token');
         const data = await response.json();
         const token = data.token;
+        const livekitUrl = data.url;
         
         room = new LivekitClient.Room({
             adaptiveStream: true,
@@ -83,7 +84,7 @@ async function connectToLiveKit() {
         });
 
         // Wait for connection to established
-        await room.connect('ws://localhost:7880', token);
+        await room.connect(livekitUrl, token);
         
         // Turn on the microphone and publish the stream to the room!
         await room.localParticipant.setMicrophoneEnabled(true);
